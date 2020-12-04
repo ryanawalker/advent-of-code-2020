@@ -71,12 +71,6 @@ validations = {
   "cid": cid
 }
 
-def passport_valid(passport):
-  for tag_val in passport:
-    if not validations[tag_val[0]](tag_val[1]):
-      return False
-  return True
-
 for passport in passports:
   valid = True
   for tag in required:
