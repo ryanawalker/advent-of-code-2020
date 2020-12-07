@@ -61,17 +61,25 @@ print(len(bags_with_gold))
 # part 2
 # let's count these bags!! with recursion!!!
 bags_inside_gold = 0
+# holds counts for bag types I've seen.
+bag_counts = {}
 
 def count_inner(bag_color):
+  # if I've seen it already, don't recount
+  if bag_color in bag_counts:
+    return bag_counts[bag_color]
+
   # every bag has at least itself
   count = 1
   contents = rule_dict[bag_color]
-  # if it's empty, return
-  if contents == [False]:
-    return count
+
   # if it's not empty, count what one would contain and add n of that bag's count to our total
-  for bag_type in contents:
-    count += count_inner(bag_type[1]) * bag_type[0]
+  if contents != [False]:
+    for bag_type in contents:
+      count += count_inner(bag_type[1]) * bag_type[0]
+
+  # add it to our count dict so we don't count it again
+  bag_counts[bag_color] = count
   return count
 
 # starting with all the bags contained in a gold bag, let's get countin'
